@@ -26,7 +26,7 @@ class ofApp : public ofBaseApp{
     ofImage impImg;
     ofImage outImg;
     int swap_num;
-    int mod_num;
+    float mod_num;
     bool switch_trigger;
     vector <int> all_buf_vals;
     vector <int> swap_array;

@@ -3,8 +3,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    srcImg.load("brew.jpg");
-    impImg.load("valley.jpg");
+    srcImg.load("outdoors.jpg");
+    impImg.load("indoor.jpg");
     srcImg.setImageType(OF_IMAGE_COLOR);
     srcImg.resize(ofGetWidth(), ofGetHeight());
     impImg.setImageType(OF_IMAGE_COLOR);
@@ -34,12 +34,12 @@ void ofApp::update(){
     swap_num += 1000;
    
     if (switch_trigger) {
-         mod_num += 2000;
+        mod_num = 1 + ((mod_num - 1)* 0.95);
     } else {
-         mod_num -= 2000;
+        mod_num -= 2000;
     }
     if (mod_num < 1) {
-        mod_num = 2;
+        mod_num = 1.001;
         switch_trigger = true;
     }
     
@@ -59,15 +59,20 @@ void ofApp::update(){
     int size = src_bf.size();
     for (int i = 0; i < size; i++) {
 //        if (i > size - (swap_num + 80000) || i < 5000 + (swap_num/6)) {
-        if (switch_trigger) {
-            if (i % mod_num == 0) {
-                char * data = src_bf.getData()+i;
-                out_bf.append(data, 1);
-            } else {
-                out_bf.append(imp_bf.getData() + i, 1);
-            }
-        } else {
-            if (i % mod_num == 0) {
+//        if (switch_trigger) {
+//            if (i < 100) {
+//                cout << "modnum: " << mod_num << endl;
+//                cout << "i: " << i << endl;
+//                cout << (int) fmod(i, mod_num) << endl;
+//            }
+//            if ((int) fmod(i, mod_num) == 0) {
+//                char * data = src_bf.getData()+i;
+//                out_bf.append(data, 1);
+//            } else {
+//                out_bf.append(imp_bf.getData() + i, 1);
+//            }
+//        } else {
+            if ((int) fmod(i, mod_num) == 0) {
                 char * data = imp_bf.getData()+i;
                 out_bf.append(data, 1);
             } else {
@@ -75,7 +80,7 @@ void ofApp::update(){
             }
         }
        
-    }
+//    }
     outImg.load(out_bf);
     
     
